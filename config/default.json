@@ -1,0 +1,10 @@
+{
+  "tipper": {
+    "url": "http://epltipping.foxsports.com.au/",
+    "username": "myuser",
+    "password": "mypassword"
+  },
+  "tips": {
+    "url": "http://www.windrawwin.com/predictionsnew.asp?l=PRM"
+  }
+}

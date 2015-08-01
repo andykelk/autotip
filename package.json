@@ -1,0 +1,21 @@
+{
+  "name": "autotip",
+  "version": "0.2.1",
+  "description": "Automatically enter EPL tips",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "request"        : "latest",
+    "request-promise": "latest",
+    "bluebird"       : "latest",
+    "cheerio"        : "latest",
+    "config"         : "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest"
+  },
+  "author": "Andy Kelk",
+  "license": "MIT"
+}
