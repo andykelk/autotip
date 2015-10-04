@@ -8,25 +8,31 @@ function Tipper() {
 Tipper.prototype.enterTips = function(predictions) {
   tipperConfig = config.get('tipper');
   request.get({uri: tipperConfig.url, jar: true}, function(err, response, page) {
+    winston.log('info', 'Loaded main tipping page');
     $ = cheerio.load(page);
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    var loginForm ={
+      username: tipperConfig.username,
+      password: tipperConfig.password,
+      csrfmiddlewaretoken: csrfToken
+    }; 
+    winston.log('info', 'Form we are sending is: %s', JSON.stringify(loginForm));
     request.post({
       uri: tipperConfig.url + 'accounts/login/',
-      form: {
-        username: tipperConfig.username,
-        password: tipperConfig.password,
-        csrfmiddlewaretoken: csrfToken
-      },
+      form: loginForm,
       jar: true,
       followAllRedirects: true
     }, function(err, response, page) {
+      winston.log('info', 'Logged in');
       $ = cheerio.load(page);
       thisWeek = $('li.ismCurrent a').attr('href');
+      winston.log('info', 'Link to this week is %s', thisWeek);
       request.get({
         uri: tipperConfig.url + thisWeek,
         jar: true,
         followAllRedirects: true
       }, function(err, response, page) {
+        winston.log('info', 'Loaded this week page');
         var form = {};
         $ = cheerio.load(page);
 
@@ -79,13 +85,14 @@ Tipper.prototype.enterTips = function(predictions) {
           next;
         }
         //console.log(form);
+        winston.log('info', 'Form we are sending is: %s', JSON.stringify(form));
         request.post({
           uri: response.request.uri.href,
           form: form,
           jar: true
         }, function(err, response, page) {
           if (err) {
-            console.log(err);
+            winston.log('info', 'Error from post: %s', JSON.stringify(err));
           }
         });
       });

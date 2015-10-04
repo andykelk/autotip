@@ -11,7 +11,8 @@
     "request-promise": "latest",
     "bluebird"       : "latest",
     "cheerio"        : "latest",
-    "config"         : "latest"
+    "config"         : "latest",
+    "winston"        : "latest"
   },
   "devDependencies": {
     "mocha": "latest"
